@@ -14,7 +14,8 @@ public class Follow : MonoBehaviour
     public float speed;
 
 
-    private bool awake = true;
+    public bool awake = false;
+    public bool ignoreCollisions = false;
 
 
     void Start()
@@ -24,8 +25,13 @@ public class Follow : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
-        if (awake)
+    {
+        float dist = Vector3.Distance(targetPos.position, transform.position);
+        if (dist <= wakeRadius)
+        {
+            awake = true;
+        }
+        if(awake)
         {
             moveToTarget();
         }
@@ -34,5 +40,12 @@ public class Follow : MonoBehaviour
     void moveToTarget()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPos.position, speed * Time.deltaTime);
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if(ignoreCollisions)
+        {
+            Physics2D.IgnoreCollision(col.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+        }
     }
 }

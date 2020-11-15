@@ -8,21 +8,54 @@ namespace Tests
 {
     public class Enemy
     {
-        // A Test behaves as an ordinary method
-        [Test]
-        public void EnemySimplePasses()
+        private player Player;
+        private Follow enemyFollow;
+
+        [SetUp]
+        public void Setup()
         {
-            // Use the Assert class to test conditions
+            GameObject playerGameObject =
+                MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
+            Player = playerGameObject.GetComponent<player>();
+
+            GameObject enemyGameObject =
+            MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/EnemyFollow"));
+            enemyFollow = enemyGameObject.GetComponent<Follow>();
         }
 
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
-        [UnityTest]
-        public IEnumerator EnemyWithEnumeratorPasses()
+        [TearDown]
+        public void Teardown()
         {
-            // Use the Assert class to test conditions.
-            // Use yield to skip a frame.
-            yield return null;
+            Object.Destroy(Player.gameObject);
+            Object.Destroy(enemyFollow.gameObject);
+        }
+
+
+        [UnityTest]
+        public IEnumerator EnemySleepsUntilPlayerInRange()
+        {
+            enemyFollow.transform.position = Vector3.zero;
+            enemyFollow.ignoreCollisions = true;
+            enemyFollow.wakeRadius = 10.0f;
+            Player.transform.position = Vector3.zero;
+
+            yield return new WaitForSeconds(0.1f);
+            Assert.IsTrue(enemyFollow.awake);
+        }
+
+        [UnityTest]
+        public IEnumerator EnemyMovesTowardsPlayerWhenAwake()
+        {
+            enemyFollow.transform.position = Vector3.zero;
+            enemyFollow.awake = true;
+            Player.transform.position = new Vector3(2.0f,1.0f,0.0f);
+            float distBefore = Vector3.Distance(Player.transform.position, enemyFollow.transform.position);
+
+            yield return new WaitForSeconds(0.5f);
+
+            float distAfter = Vector3.Distance(Player.transform.position, enemyFollow.transform.position);
+
+            Assert.IsTrue(distBefore > distAfter);
         }
     }
 }
