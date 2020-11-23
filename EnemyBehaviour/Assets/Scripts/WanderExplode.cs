@@ -225,4 +225,14 @@ public class WanderExplode : MonoBehaviour
     {
         moveDirection = (dir)direction;
     }
+
+    public int getDir()
+    {
+        return (int)moveDirection;
+    }
+
+    public void setCounter(float t_new)
+    {
+        moveCounter = t_new;
+    }
 }

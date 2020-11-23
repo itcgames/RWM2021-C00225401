@@ -74,5 +74,15 @@ namespace Tests
             float present = enemyWE.getCounter();
             Assert.IsTrue(prev > present);
         }
+
+        [UnityTest]
+        public IEnumerator EnemyMovesTowardsPlayerCounterIsZero()
+        {
+            float distBefore = Vector3.Distance(Player.transform.position, enemyWE.transform.position);
+            enemyWE.setCounter(0);
+            yield return new WaitForSeconds(0.5f);
+            float distAfter = Vector3.Distance(Player.transform.position, enemyWE.transform.position);
+            Assert.IsTrue(distBefore > distAfter);
+        }
     }
 }
