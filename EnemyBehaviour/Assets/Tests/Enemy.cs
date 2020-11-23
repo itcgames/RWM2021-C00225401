@@ -10,6 +10,7 @@ namespace Tests
     {
         private player Player;
         private Follow enemyFollow;
+        private WanderExplode enemyWE;
 
         [SetUp]
         public void Setup()
@@ -18,9 +19,14 @@ namespace Tests
                 MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
             Player = playerGameObject.GetComponent<player>();
 
-            GameObject enemyGameObject =
+            GameObject enemyFGameObject =
             MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/EnemyFollow"));
-            enemyFollow = enemyGameObject.GetComponent<Follow>();
+            enemyFollow = enemyFGameObject.GetComponent<Follow>();
+
+            GameObject enemyWEGameObject =
+            MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/EnemyExplode"));
+            enemyWE = enemyWEGameObject.GetComponent<WanderExplode>();
+
         }
 
         [TearDown]
@@ -28,9 +34,10 @@ namespace Tests
         {
             Object.Destroy(Player.gameObject);
             Object.Destroy(enemyFollow.gameObject);
+            Object.Destroy(enemyWE.gameObject);
         }
 
-
+        // Enemy Follow------------------------------------------
         [UnityTest]
         public IEnumerator EnemySleepsUntilPlayerInRange()
         {
@@ -56,6 +63,16 @@ namespace Tests
             float distAfter = Vector3.Distance(Player.transform.position, enemyFollow.transform.position);
 
             Assert.IsTrue(distBefore > distAfter);
+        }
+
+        // Enemy Wander Explode-----------------------------------------------------
+        [UnityTest]
+        public IEnumerator EnemyMoveCounterDecreases()
+        {
+            float prev = enemyWE.getCounter();
+            yield return new WaitForSeconds(0.5f);
+            float present = enemyWE.getCounter();
+            Assert.IsTrue(prev > present);
         }
     }
 }

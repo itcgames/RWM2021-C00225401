@@ -20,6 +20,7 @@ public class WanderExplode : MonoBehaviour
 
 
     enum dir { North, South, East, West };
+    [SerializeField]
     private dir moveDirection;
 
   //  private Rigidbody2D rb2d;
@@ -28,7 +29,7 @@ public class WanderExplode : MonoBehaviour
 
     void Start()
     {
-        moveDirection = dir.North;
+        //moveDirection = dir.North;
         roomSprite = room.GetComponent<SpriteRenderer>();
         enemySprite = GetComponent<SpriteRenderer>();
         roomW = roomSprite.bounds.size.x;
@@ -155,5 +156,15 @@ public class WanderExplode : MonoBehaviour
         {
             clockwise = true;
         }
+    }
+
+    public float getCounter()
+    {
+        return moveCounter;
+    }
+
+    public void setDir(int direction)
+    {
+        moveDirection = (dir)direction;
     }
 }
