@@ -15,37 +15,59 @@ public class WanderExplode : MonoBehaviour
     [SerializeField]
     private float moveCounter;
 
+    private float moveReset;
+
     private float roomW;
     private float roomH;
 
 
-    enum dir { North, South, East, West };
+    enum dir { North, South, East, West, moveToward, moveAway };
     [SerializeField]
     private dir moveDirection;
 
-  //  private Rigidbody2D rb2d;
+    private dir prevDirection;
+
+    //  private Rigidbody2D rb2d;
     private SpriteRenderer roomSprite;
     private SpriteRenderer enemySprite;
 
+    private Vector3 startPos;
+
     void Start()
     {
-        //moveDirection = dir.North;
+        prevDirection = dir.North;
         roomSprite = room.GetComponent<SpriteRenderer>();
         enemySprite = GetComponent<SpriteRenderer>();
         roomW = roomSprite.bounds.size.x;
         roomH = roomSprite.bounds.size.y;
+        startPos = transform.position;
+        moveReset = moveCounter;
     }
 
     private void Update()
     {
-        moveCounter -= Time.deltaTime;
+        if (moveDirection != dir.moveAway && moveDirection != dir.moveToward)
+        {
+            moveCounter -= Time.deltaTime;
+        }
     }
 
     void LateUpdate()
     {
-        if (moveCounter >= 0)
+        if (moveDirection == dir.North || moveDirection == dir.South || moveDirection == dir.East || moveDirection == dir.West)
         {
             moveAroundRoom();
+            if(moveCounter < 0)
+            {
+                prevDirection = moveDirection;
+                moveDirection = dir.moveToward;
+                startPos = transform.position;
+                moveCounter = moveReset;
+            }
+        }
+        else
+        {
+            moveTowardPlayer();
         }
     }
 
@@ -145,16 +167,52 @@ public class WanderExplode : MonoBehaviour
         }
     }
 
+    void moveTowardPlayer()
+    {
+        if(moveDirection == dir.moveToward)
+        {
+            Vector3 move = targetPos.position - transform.position;
+            move = move / Vector3.Distance(transform.position , targetPos.position);
+            move = move * speed;
+            transform.position = new Vector3(transform.position.x + move.x, transform.position.y + move.y, transform.position.z + move.z);
+            if (Vector3.Distance(transform.position, targetPos.position) < 0.1f)
+            {
+                moveDirection = dir.moveAway;
+            }
+        } 
+        else if(moveDirection == dir.moveAway)
+        {
+            Vector3 move = startPos - transform.position;
+            move = move / Vector3.Distance(transform.position, startPos);
+            move = move * speed;
+            transform.position = new Vector3(transform.position.x + move.x, transform.position.y + move.y, transform.position.z + move.z);
+            if (Vector3.Distance(transform.position, startPos) < 0.1f)
+            {
+                moveDirection = prevDirection;
+            }
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
-        changeDirection();
-        if(clockwise)
+        if (moveDirection != dir.moveAway && moveDirection != dir.moveToward)
         {
-            clockwise = false;
+            changeDirection();
+            if (clockwise)
+            {
+                clockwise = false;
+            }
+            else
+            {
+                clockwise = true;
+            }
         }
         else
         {
-            clockwise = true;
+            if(moveDirection == dir.moveToward)
+            {
+                moveDirection = dir.moveAway;
+            }
         }
     }
 
