@@ -70,7 +70,7 @@ public class EnemyBounce : MonoBehaviour
     {
         if (c.gameObject.tag == "Player")
         {
-            split();
+            split(); 
         }
         else
         {
