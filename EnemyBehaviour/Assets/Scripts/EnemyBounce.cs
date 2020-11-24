@@ -10,10 +10,15 @@ public class EnemyBounce : MonoBehaviour
     private float speed;
     [SerializeField]
     public GameObject room;
+    [SerializeField]
+    private GameObject spawn;
+    [SerializeField]
+    private float spawnTimer;
 
     private SpriteRenderer roomSprite;
     private Rigidbody2D rgby;
     private Vector3 dir;
+    private float spawnReset;
 
     // Start is called before the first frame update
     void Start()
@@ -22,16 +27,26 @@ public class EnemyBounce : MonoBehaviour
         roomSprite = room.GetComponent<SpriteRenderer>();
         rgby = GetComponent<Rigidbody2D>();
         rgby.AddForce(new Vector3(1.0f, 1.0f, 0.0f) * speed);
+        spawnReset = spawnTimer;
     }
 
     private void LateUpdate()
     {
+        spawnTimer -= Time.deltaTime;
         boundryCheck();
     }
 
     private void split()
     {
-
+        if (spawnTimer <= 0)
+        {
+            spawnTimer = spawnReset;
+            GameObject enemy1 =  Instantiate(spawn);
+            GameObject enemy2 =  Instantiate(spawn);
+            enemy1.transform.SetParent(transform.parent);
+            enemy2.transform.SetParent(transform.parent);
+            Destroy(this.gameObject);
+        }
     }
 
     private void boundryCheck()
@@ -72,12 +87,9 @@ public class EnemyBounce : MonoBehaviour
         {
             split(); 
         }
-        else
-        {
-            dir = new Vector3(c.contacts[0].point.x, c.contacts[0].point.y, 0.0f);
-            dir -= transform.position;
-            dir = -dir.normalized;
-            rgby.AddForce(dir * speed);
-        }
+        dir = new Vector3(c.contacts[0].point.x, c.contacts[0].point.y, 0.0f);
+        dir -= transform.position;
+        dir = -dir.normalized;
+        rgby.AddForce(dir * speed);
     }
 }
