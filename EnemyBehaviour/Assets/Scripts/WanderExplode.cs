@@ -27,7 +27,6 @@ public class WanderExplode : MonoBehaviour
 
     private dir prevDirection;
 
-    //  private Rigidbody2D rb2d;
     private SpriteRenderer roomSprite;
     private SpriteRenderer enemySprite;
 
