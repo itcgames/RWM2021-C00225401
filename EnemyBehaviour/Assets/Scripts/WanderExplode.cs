@@ -9,16 +9,18 @@ public class WanderExplode : MonoBehaviour
     [SerializeField]
     public float speed;
     [SerializeField]
-    public GameObject room;
-    [SerializeField]
     public bool clockwise;
     [SerializeField]
     private float moveCounter;
 
     private float moveReset;
 
+    [SerializeField]
     private float roomW;
+    [SerializeField]
     private float roomH;
+    [SerializeField]
+    private Vector3 roomPos;
 
 
     enum dir { North, South, East, West, moveToward, moveAway };
@@ -27,7 +29,6 @@ public class WanderExplode : MonoBehaviour
 
     private dir prevDirection;
 
-    private SpriteRenderer roomSprite;
     private SpriteRenderer enemySprite;
 
     private Vector3 startPos;
@@ -35,10 +36,7 @@ public class WanderExplode : MonoBehaviour
     void Start()
     {
         prevDirection = dir.North;
-        roomSprite = room.GetComponent<SpriteRenderer>();
         enemySprite = GetComponent<SpriteRenderer>();
-        roomW = roomSprite.bounds.size.x;
-        roomH = roomSprite.bounds.size.y;
         startPos = transform.position;
         moveReset = moveCounter;
     }
@@ -94,7 +92,7 @@ public class WanderExplode : MonoBehaviour
     {
         if (moveDirection == dir.North)
         {
-            if (transform.position.y + (enemySprite.bounds.size.y) < room.transform.position.y + (roomH / 2))
+            if (transform.position.y + (enemySprite.bounds.size.y) < roomPos.y + (roomH / 2))
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + speed, transform.position.z);
             }
@@ -112,7 +110,7 @@ public class WanderExplode : MonoBehaviour
         }
         else if (moveDirection == dir.South)
         {
-            if (transform.position.y - (enemySprite.bounds.size.y) > room.transform.position.y - (roomH / 2))
+            if (transform.position.y - (enemySprite.bounds.size.y) > roomPos.y - (roomH / 2))
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - speed, transform.position.z);
             }
@@ -130,7 +128,7 @@ public class WanderExplode : MonoBehaviour
         }
         else if (moveDirection == dir.East)
         {
-            if (transform.position.x + (enemySprite.bounds.size.x) < room.transform.position.x + (roomW / 2))
+            if (transform.position.x + (enemySprite.bounds.size.x) < roomPos.x + (roomW / 2))
             {
                 transform.position = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z);
             }
@@ -148,7 +146,7 @@ public class WanderExplode : MonoBehaviour
         }
         else if (moveDirection == dir.West)
         {
-            if (transform.position.x - (enemySprite.bounds.size.x) > room.transform.position.x - (roomW / 2))
+            if (transform.position.x - (enemySprite.bounds.size.x) > roomPos.x - (roomW / 2))
             {
                 transform.position = new Vector3(transform.position.x - speed, transform.position.y, transform.position.z);
             }

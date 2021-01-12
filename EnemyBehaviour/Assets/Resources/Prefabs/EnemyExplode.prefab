@@ -143,10 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4edd6e4c87b4be240bc58e04e416b528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPos: {fileID: 4350425087049647215, guid: df196814c1f177649ba42aa73da343e6,
-    type: 3}
+  targetPos: {fileID: 0}
   speed: 0.01
-  room: {fileID: 6036813365877103387, guid: b72bdd349593b5b4ebd407fdd9cda0de, type: 3}
   clockwise: 1
   moveCounter: 10
+  roomW: 17
+  roomH: 10
+  roomPos: {x: 0, y: 0, z: 0}
   moveDirection: 0

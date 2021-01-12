@@ -1044,12 +1044,12 @@ PrefabInstance:
     - target: {fileID: 6036813365877103385, guid: b72bdd349593b5b4ebd407fdd9cda0de,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.035
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6036813365877103385, guid: b72bdd349593b5b4ebd407fdd9cda0de,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.035
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6036813365877103385, guid: b72bdd349593b5b4ebd407fdd9cda0de,
         type: 3}
@@ -1096,6 +1096,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6036813365877103385, guid: b72bdd349593b5b4ebd407fdd9cda0de,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036813365877103385, guid: b72bdd349593b5b4ebd407fdd9cda0de,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6036813365877103387, guid: b72bdd349593b5b4ebd407fdd9cda0de,
         type: 3}
       propertyPath: m_Name
@@ -1115,20 +1125,15 @@ PrefabInstance:
       propertyPath: targetPos
       value: 
       objectReference: {fileID: 23863694}
-    - target: {fileID: 8032363414508090440, guid: b12d0b162cecfd74984f8c20da6041d2,
-        type: 3}
-      propertyPath: room
-      value: 
-      objectReference: {fileID: 322903588}
     - target: {fileID: 8032363414508090441, guid: b12d0b162cecfd74984f8c20da6041d2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.25
+      value: -7.57
       objectReference: {fileID: 0}
     - target: {fileID: 8032363414508090441, guid: b12d0b162cecfd74984f8c20da6041d2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.36
+      value: -0.47
       objectReference: {fileID: 0}
     - target: {fileID: 8032363414508090441, guid: b12d0b162cecfd74984f8c20da6041d2,
         type: 3}
@@ -1179,11 +1184,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyExplode
-      objectReference: {fileID: 0}
-    - target: {fileID: 8032363414508090445, guid: b12d0b162cecfd74984f8c20da6041d2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b12d0b162cecfd74984f8c20da6041d2, type: 3}
