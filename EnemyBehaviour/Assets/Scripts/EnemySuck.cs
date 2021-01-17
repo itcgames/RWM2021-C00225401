@@ -30,4 +30,9 @@ public class EnemySuck : MonoBehaviour
         }
 
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //player loses health
+    }
 }
