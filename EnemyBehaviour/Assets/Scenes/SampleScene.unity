@@ -320,6 +320,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  puddle: {fileID: 1916012158890815491, guid: 1cb081472ec99954ebfe25aecf88ed07, type: 3}
+  spawnTimer: 1
 --- !u!212 &654631031
 SpriteRenderer:
   m_ObjectHideFlags: 0
