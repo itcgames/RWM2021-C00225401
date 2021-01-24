@@ -11,6 +11,8 @@ namespace Tests
         private player Player;
         private Follow enemyFollow;
         private WanderExplode enemyWE;
+        private EnemySuck enemySucc;
+        private Wander enemyPuddle;
 
         [SetUp]
         public void Setup()
@@ -27,6 +29,14 @@ namespace Tests
             MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/EnemyExplode"));
             enemyWE = enemyWEGameObject.GetComponent<WanderExplode>();
 
+            GameObject enemyESGameObject =
+            MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/succ"));
+            enemySucc = enemyESGameObject.GetComponent<EnemySuck>();
+
+            GameObject enemyEPGameObject =
+           MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/EnemyDropPuddle"));
+            enemyPuddle = enemyEPGameObject.GetComponent<Wander>();
+
         }
 
         [TearDown]
@@ -35,6 +45,8 @@ namespace Tests
             Object.Destroy(Player.gameObject);
             Object.Destroy(enemyFollow.gameObject);
             Object.Destroy(enemyWE.gameObject);
+            Object.Destroy(enemySucc.gameObject);
+            Object.Destroy(enemyPuddle.gameObject);
         }
 
         // Enemy Follow------------------------------------------
@@ -84,5 +96,26 @@ namespace Tests
             float distAfter = Vector3.Distance(Player.transform.position, enemyWE.transform.position);
             Assert.IsTrue(distBefore > distAfter);
         }
+
+        [UnityTest]
+        public IEnumerator EnemyDrawsPlayerIn()
+        {
+            enemySucc.setRadius(1000);
+            enemySucc.transform.position = Player.transform.position + new Vector3(1.0f, 1.0f, 0.0f);
+            float distBefore = Vector3.Distance(Player.transform.position, enemySucc.transform.position);
+            yield return new WaitForSeconds(0.5f);
+            float distAfter = Vector3.Distance(Player.transform.position, enemySucc.transform.position);
+            Assert.IsFalse(distBefore > distAfter);
+        }
+
+        [UnityTest]
+        public IEnumerator EnemySpawnsPuddle()
+        {
+            enemyPuddle.setPuddleTimer(0);
+            yield return new WaitForSeconds(0.5f);
+            GameObject puddle = GameObject.Find("puddle(Clone)");
+            Assert.IsFalse(puddle == null);
+        }
+
     }
 }

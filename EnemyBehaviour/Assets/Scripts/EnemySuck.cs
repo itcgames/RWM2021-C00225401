@@ -35,4 +35,9 @@ public class EnemySuck : MonoBehaviour
     {
         //player loses health
     }
+
+    public void setRadius(int t_new)
+    {
+        suckRadius = t_new;
+    }
 }
